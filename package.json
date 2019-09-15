@@ -1,0 +1,41 @@
+{
+  "name": "website",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "axios": "^0.19.0",
+    "body-parser": "^1.19.0",
+    "cheerio": "^1.0.0-rc.3",
+    "cors": "^2.8.5",
+    "morgan": "^1.9.1",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "react-scripts": "3.1.1"
+  },
+  "scripts": {
+    "start": "concurrently \"cd server && nodemon server.js\" \"npm run machine-start\"",
+    "machine-start": "cd website && npm run start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "concurrently": "^4.1.2",
+    "nodemon": "^1.19.2"
+  }
+}
