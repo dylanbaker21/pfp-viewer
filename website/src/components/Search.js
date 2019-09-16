@@ -10,7 +10,7 @@ export class Search extends Component {
 
   getPFP = () => {
     axios
-      .get(`http://192.168.2.14:3001/api/test/${this.state.username}`)
+      .get(`http://3.13.29.0:3001/api/profile/${this.state.username}`)
       .then(res => this.setState({ pfp: res.data.profilePic, loading: false }));
   };
 

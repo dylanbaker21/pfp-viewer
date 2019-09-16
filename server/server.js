@@ -31,7 +31,7 @@ app.use(bodyParser.json());
 app.use(logger("dev"));
 
 // NO-AUTH: Test Route
-router.get("/test/:id", (req, res) => {
+router.get("/profile/:id", (req, res) => {
   console.log(req.params.id);
   axios.get(`https://vsco.co/${req.params.id}`).then(response => {
     const $ = cheerio.load(response.data);
