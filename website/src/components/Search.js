@@ -4,17 +4,19 @@ import axios from "axios";
 export class Search extends Component {
   state = {
     username: "",
-    pfp: ""
+    pfp: "",
+    loading: false
   };
 
   getPFP = () => {
     axios
-      .get(`http://localhost:3001/api/test/${this.state.username}`)
-      .then(res => this.setState({ pfp: res.data.profilePic }));
+      .get(`http://192.168.2.14:3001/api/test/${this.state.username}`)
+      .then(res => this.setState({ pfp: res.data.profilePic, loading: false }));
   };
 
   handleSubmit = e => {
     e.preventDefault();
+    this.setState({ loading: true });
     this.getPFP();
   };
 
@@ -25,21 +27,43 @@ export class Search extends Component {
   render() {
     return (
       <div>
-        <form onSubmit={this.handleSubmit}>
+        <p>
+          Enter a VSCO username below to view their Full-size, Un-cropped,
+          High-Resolution profile picture
+        </p>
+        <form>
           <input
-            placeholder="Enter VSCO Username"
+            placeholder="Enter Username"
             value={this.state.username}
             onChange={this.handleChange}
             name="username"
+            style={searchInputStyle}
+            required
           ></input>
-          <button>Submit</button>
+          <button
+            onClick={this.handleSubmit}
+            style={searchButtonStyle}
+            type="submit"
+          >
+            {this.state.loading === true ? "Loading..." : "Search"}
+          </button>
         </form>
         {this.state.pfp !== "" ? ( //if there's a pfp render image
-          <img
-            src={this.state.pfp}
-            alt="vsco profile"
-            style={profilePicStyle}
-          ></img>
+          <div>
+            <img
+              src={this.state.pfp}
+              alt="vsco profile"
+              style={profilePicStyle}
+            ></img>
+            <br />
+            <button
+              type="submit"
+              onClick={() => window.open(this.state.pfp, "blank")}
+              style={downloadButtonStyle}
+            >
+              View Full Size
+            </button>
+          </div>
         ) : (
           //else no pfp then show nothing
           <div></div>
@@ -55,4 +79,33 @@ const profilePicStyle = {
   margin: "1em"
 };
 
+const searchInputStyle = {
+  border: "0.1em solid lightgray",
+  borderRadius: ".25rem",
+  height: "3em",
+  margin: "0.5em",
+  textAlign: "center"
+};
+
+const searchButtonStyle = {
+  backgroundColor: "black",
+  padding: ".375rem .75rem",
+  fontSize: "1rem",
+  lineHeight: "1.5",
+  borderRadius: ".25rem",
+  cursor: "pointer",
+  color: "white",
+  margin: "0.5em"
+};
+
+const downloadButtonStyle = {
+  backgroundColor: "black",
+  padding: ".375rem .75rem",
+  fontSize: "1rem",
+  lineHeight: "1.5",
+  borderRadius: ".25rem",
+  cursor: "pointer",
+  color: "white",
+  margin: "0.5em"
+};
 export default Search;
