@@ -15,7 +15,7 @@
   },
   "scripts": {
     "start": "cd website && npm run start",
-    "build": "react-scripts build",
+    "build": "cd website && npm run build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
