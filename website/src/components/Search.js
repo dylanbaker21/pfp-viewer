@@ -10,7 +10,7 @@ export class Search extends Component {
 
   getPFP = () => {
     axios
-      .get(`http://3.13.29.0:3001/api/profile/${this.state.username}`)
+      .get(`https://www.vscoviewer.com:3001/api/profile/${this.state.username}`)
       .then(res => this.setState({ pfp: res.data.profilePic, loading: false }));
   };
 

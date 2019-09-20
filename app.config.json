@@ -1,0 +1,11 @@
+{
+  apps : [
+    {
+      name      : "front-end",
+      cwd: "./website",
+      script    : "npx",
+      interpreter: "none",
+      args: "serve -s build"
+    }
+  ]
+}
