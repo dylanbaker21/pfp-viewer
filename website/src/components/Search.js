@@ -65,7 +65,12 @@ export class Search extends Component {
             {this.state.loading === true ? "Loading..." : "Search"}
           </button>
         </form>
-        {this.state.pfp !== "" ? ( //if there's a pfp then render image
+        {this.state.error === true ? ( //if there's an error then render err msg
+          <p>
+            Could not find that user, be sure to enter the unique username and
+            not the display name
+          </p>
+        ) : this.state.pfp !== "" ? ( //if there's a pfp then render image
           <div>
             <img
               src={this.state.pfp}
@@ -82,14 +87,7 @@ export class Search extends Component {
             </button>
           </div>
         ) : (
-          <div></div>
-        )}
-        {this.state.error === true ? ( //if there's an error then render err msg
-          <p>
-            Could not find that user, be sure to enter the unique username and
-            not the display name
-          </p>
-        ) : (
+          //else render nothing
           <div></div>
         )}
       </div>
