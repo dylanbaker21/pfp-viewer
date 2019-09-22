@@ -1,4 +1,3 @@
-//const mongoose = require("mongoose");
 const express = require("express");
 const bodyParser = require("body-parser");
 const logger = require("morgan");
@@ -24,23 +23,38 @@ app.use(function(req, res, next) {
 
 const router = express.Router();
 
-// (optional) only used for logging and
-// parsing the request body to be readable json
+// used for logging and parsing
+// the request body to readable json
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(logger("dev"));
 
-// NO-AUTH: Test Route
+// Health check route
+router.get("/", (req, res) => {
+  res.json({
+    Healthy: true
+  });
+});
+
+// Route that scrapes profile picture link from VSCO HTML
 router.get("/profile/:id", (req, res) => {
   console.log(req.params.id);
-  axios.get(`https://vsco.co/${req.params.id}`).then(response => {
-    const $ = cheerio.load(response.data);
-    let fullPicLink = $(".css-147a4kv").attr("src");
-    let trimmedPicLink = fullPicLink.split("?")[0];
-    res.json({
-      profilePic: trimmedPicLink
+  axios
+    .get(`https://vsco.co/${req.params.id}`)
+    .then(response => {
+      const $ = cheerio.load(response.data);
+      let fullPicLink = $(".css-147a4kv").attr("src");
+      let trimmedPicLink = fullPicLink.split("?")[0];
+      res.json({
+        profilePic: trimmedPicLink
+      });
+    })
+    .catch(error => {
+      console.log(error.response.status, "", error.response.statusText);
+      res.json({
+        error: true
+      });
     });
-  });
 });
 
 // append /api for our http requests

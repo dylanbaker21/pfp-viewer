@@ -5,13 +5,30 @@ export class Search extends Component {
   state = {
     username: "",
     pfp: "",
-    loading: false
+    loading: false,
+    error: false
   };
 
   getPFP = () => {
     axios
       .get(`https://www.vscoviewer.com:3001/api/profile/${this.state.username}`)
-      .then(res => this.setState({ pfp: res.data.profilePic, loading: false }));
+      .then(res => {
+        if (res.data.error) {
+          this.setState({
+            loading: false,
+            error: true
+          });
+        } else {
+          this.setState({
+            pfp: res.data.profilePic,
+            loading: false,
+            error: false
+          });
+        }
+      })
+      .catch(err => {
+        this.setState({ pfp: "", loading: false, error: true });
+      });
   };
 
   handleSubmit = e => {
@@ -39,7 +56,7 @@ export class Search extends Component {
             name="username"
             style={searchInputStyle}
             required
-          ></input>
+          />
           <button
             onClick={this.handleSubmit}
             style={searchButtonStyle}
@@ -48,7 +65,7 @@ export class Search extends Component {
             {this.state.loading === true ? "Loading..." : "Search"}
           </button>
         </form>
-        {this.state.pfp !== "" ? ( //if there's a pfp render image
+        {this.state.pfp !== "" ? ( //if there's a pfp then render image
           <div>
             <img
               src={this.state.pfp}
@@ -65,7 +82,14 @@ export class Search extends Component {
             </button>
           </div>
         ) : (
-          //else no pfp then show nothing
+          <div></div>
+        )}
+        {this.state.error === true ? ( //if there's an error then render err msg
+          <p>
+            Could not find that user, be sure to enter the unique username and
+            not the display name
+          </p>
+        ) : (
           <div></div>
         )}
       </div>
