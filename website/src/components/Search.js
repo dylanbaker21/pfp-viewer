@@ -11,7 +11,7 @@ export class Search extends Component {
 
   getPFP = () => {
     axios
-      .get(`https://www.vscoviewer.com:3001/api/profile/${this.state.username}`)
+      .get(`https://www.vscoviewer.com/api/profile/${this.state.username}`)
       .then(res => {
         if (res.data.error) {
           this.setState({

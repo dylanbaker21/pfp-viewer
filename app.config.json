@@ -1,11 +1,11 @@
 {
   apps : [
     {
-      name      : "front-end",
+      name      : "pfp-viewer-front-end",
       cwd: "./website",
       script    : "npx",
       interpreter: "none",
-      args: "serve -s build"
+      args: "serve -s build -l 4000"
     }
   ]
 }

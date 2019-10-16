@@ -6,7 +6,7 @@ const axios = require("axios");
 const cheerio = require("cheerio");
 
 // port to run server on
-const API_PORT = 3001;
+const API_PORT = 4001;
 
 // use cors to bypass cross-origin security
 const app = express();
